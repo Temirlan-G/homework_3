@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Все категории</h1>
+<form action="/categories/" method="get">
+    <input type="text" name="search_text" placeholder="Введите категорию">
+    <input type="submit" value="Поиск">
+</form>
+{% for categories in category %}
+    <hr>
+    <p>Категория: {{ categories.name }}</p>
+{% endfor %}
+
+</body>
+</html>

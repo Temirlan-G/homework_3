@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>{{ products.title }}</h1>
+{% for review in reviews %}
+    <p>Отзыв: {{ review.text }}</p>
+    <hr>
+{% endfor %}
+
+</body>
+</html>

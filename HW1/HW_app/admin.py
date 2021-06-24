@@ -1,10 +1,35 @@
 from django.contrib import admin
-from HW_app.models import Category
-from HW_app.models import Product
-from HW_app.models import Review
+from HW_app.models import Category, Product, Review
+
+
 # Register your models here.
 
+class ReviewInline(admin.StackedInline):
+    model = Review
+    fields = 'text'.split()
 
-admin.site.register(Category)
-admin.site.register(Product)
-admin.site.register(Review)
+
+class ProductInline(admin.StackedInline):
+    model = Product
+    fields = 'title'.split()
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    inlines = [ProductInline]
+
+
+class ProductAdmin(admin.ModelAdmin):
+    list_display = 'title description price category'.split()
+    search_fields = 'title'.split()
+    list_filter = 'category'.split()
+    list_editable = 'description price'.split()
+    inlines = [ReviewInline]
+
+
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = 'id text'.split()
+
+
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Product, ProductAdmin)
+admin.site.register(Review, ReviewAdmin)
