@@ -1,0 +1,17 @@
+body{
+    background: yellow;
+}
+
+.yellow-tag{
+    text-decoration: None;
+    color: black;
+    margin: 20px;
+    padding: 6px;
+    border: black solid 1px;
+    border-radius: 50px;
+}
+
+.logo-img{
+    height: 50px;
+    width: 50px;
+}

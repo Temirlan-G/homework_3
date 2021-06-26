@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>{{ products.title }}</h1>
-{% for review in reviews %}
-    <p>Отзыв: {{ review.text }}</p>
-    <hr>
-{% endfor %}
-
-</body>
-</html>
+{% extends 'layout.html' %}
+{% block content %}
+<h1 class="yellow-tag">{{ products.title }}</h1>
+    <p class="yellow-tag">Кол-во отзывов: {{ reviews }}</p>
+<hr>
+    {% for reviews in review %}
+    <p class="yellow-tag">Отзыв:{{ reviews.text }}</p>
+        <p class="yellow-tag">Дата:{{ reviews.date }}</p>
+        <hr>
+    {% endfor %}
+{% endblock %}

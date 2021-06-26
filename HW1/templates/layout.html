@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<nav class="navbar navbar-light" style="background-color: deepskyblue;">
+  <div class="container-fluid">
+      <nav>
+          <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+      <img src="{% static 'images/pylogo.png' %}" alt="" width="50" height="50" class="d-inline-block align-text-top">
+      Главная страница
+    </a>
+    </div>
+      <a class="navbar-brand" aria-current="page" href="/categories/">Категории</a>
+          <a class="navbar-brand" aria-current="page" href="/product/">Товары</a>
+          <a class="navbar-brand" aria-current="page" href="/review/">Отзывы </a>
+          <nav/>
+  </div>
+</nav>
+{% block content %}
+
+{% endblock %}
+</body>
+</html>
