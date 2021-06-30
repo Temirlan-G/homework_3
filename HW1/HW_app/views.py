@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # from django.http import HttpResponse
+from .forms import ProductCreateForm, ReviewCreateForm
 from .models import Category, Product, Review
 from django.db.models import Q
 
@@ -42,3 +43,37 @@ def review_list(request):
            'review': review
         }
     return render(request, 'reviews.html', context=data)
+
+
+def add_product(request):
+    if request.method == 'GET':
+        form = ProductCreateForm()
+        data = {
+            'form': form
+        }
+        return render(request, 'add_product.html', context=data)
+    elif request.method == 'POST':
+        form = ProductCreateForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/product/')
+        else:
+            return render(request, 'add_product.html',
+                    context={'form': form})
+
+
+def add_review(request):
+    if request.method == 'GET':
+        form = ReviewCreateForm
+        data = {
+            'form': form,
+        }
+        return render(request, 'add_review.html', context=data)
+    elif request.method == 'POST':
+        form = ReviewCreateForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/review/')
+        else:
+            return render(request, 'add_review.html',
+                    context={'form': form})
