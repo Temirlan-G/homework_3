@@ -3,6 +3,7 @@
 <h1 class="yellow-tag">Все отзывы</h1>
 {% for reviews in review %}
     <hr>
+    <p class="yellow-tag">Автор:{{ reviews.author }}</p>
     <p class="yellow-tag">Дата отзыва: {{ reviews.date }}</p>
     <p class="yellow-tag">Отзыв: {{ reviews.text }}</p>
 {% endfor %}

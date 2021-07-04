@@ -1,9 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 # from django.http import HttpResponse
 from .forms import ProductCreateForm, ReviewCreateForm
 from .models import Category, Product, Review
 from django.db.models import Q
-
 
 # Create your views here.
 
@@ -62,6 +62,7 @@ def add_product(request):
                     context={'form': form})
 
 
+@login_required(login_url='/login/')
 def add_review(request):
     if request.method == 'GET':
         form = ReviewCreateForm
@@ -77,3 +78,30 @@ def add_review(request):
         else:
             return render(request, 'add_review.html',
                     context={'form': form})
+
+
+from django.contrib import auth
+
+
+def login(request):
+    data = {}
+    next = request.GET.get('next')
+    if next:
+        data = {
+            'message': 'Авторизуйтесь для того, чтобы отсавить отзыв'
+        }
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = auth.authenticate(username=username, password=password)
+        if user:
+            auth.login(request, user)
+            return redirect('/')
+        else:
+            data['message'] = 'Неверный логин или пароль'
+    return render(request, 'login.html', context=data)
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('/')

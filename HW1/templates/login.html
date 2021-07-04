@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+    {% if message %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Ошибка!</strong> {{ message }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+<h1>Войти в систему</h1>
+<form action="/login/" style="width: 500px" method="post">
+    {% csrf_token %}
+    <p><input type="text" placeholder="Имя пользователся" name="username" class="form-control"></p>
+    <p><input type="password" placeholder="Пароль" name="password" class="form-control"></p>
+    <input class="btn btn-success" type="submit" value="Войти">
+</form>
+{% endblock %}

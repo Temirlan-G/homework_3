@@ -2,7 +2,7 @@ from django import forms
 from django.forms import TextInput, NumberInput, Select
 
 from HW_app.models import Product, Review
-
+from django.contrib.auth.models import User
 
 class ProductCreateForm(forms.ModelForm):
     class Meta:
@@ -50,5 +50,5 @@ class ReviewCreateForm(forms.ModelForm):
                     'class': 'form-control',
                     'placeholder': 'Введите отзыв'
                 }
-            )
+            ),
         }

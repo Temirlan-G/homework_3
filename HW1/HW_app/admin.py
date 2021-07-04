@@ -27,7 +27,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = 'text date'.split()
+    list_display = 'author text date'.split()
 
 
 admin.site.register(Category, CategoryAdmin)

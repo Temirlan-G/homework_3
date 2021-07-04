@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -34,6 +34,7 @@ class Review(models.Model):
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
 
+    author = models.ForeignKey(to=User, verbose_name='Автор', on_delete=models.CASCADE, null=True)
     text = models.CharField('Текст', max_length=255)
     date = models.DateTimeField('Дата', auto_now=True, null=False)
     product = models.ForeignKey(Product, verbose_name='Товар', on_delete=models.CASCADE)
