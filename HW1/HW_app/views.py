@@ -1,9 +1,16 @@
+import secrets
+
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 # from django.http import HttpResponse
-from .forms import ProductCreateForm, ReviewCreateForm
+from HW1 import settings
+from .forms import ProductCreateForm, ReviewCreateForm, UserRegisterForm
 from .models import Category, Product, Review
 from django.db.models import Q
+
 
 # Create your views here.
 
@@ -40,8 +47,8 @@ def categories_list(request):
 def review_list(request):
     review = Review.objects.all().exclude(text='niger').order_by('date')
     data = {
-           'review': review
-        }
+        'review': review
+    }
     return render(request, 'reviews.html', context=data)
 
 
@@ -59,7 +66,7 @@ def add_product(request):
             return redirect('/product/')
         else:
             return render(request, 'add_product.html',
-                    context={'form': form})
+                          context={'form': form})
 
 
 @login_required(login_url='/login/')
@@ -73,11 +80,12 @@ def add_review(request):
     elif request.method == 'POST':
         form = ReviewCreateForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            Review.objects.create(author=request.user, text=form.cleaned_data['text'],
+                                  product=form.cleaned_data['product'])
             return redirect('/review/')
         else:
             return render(request, 'add_review.html',
-                    context={'form': form})
+                          context={'form': form})
 
 
 from django.contrib import auth
@@ -105,3 +113,30 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(data=request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+                username=request.POST['email'],
+                password=request.POST['password'],
+                password1=request.POST['password1'],
+                is_active=False
+            )
+            code = secrets.token_urlsafe(16)
+            send_mail(
+                subject='Activation code',
+                message=f'http//:1270.0.1:8000/activate/{code}',
+                from_email=settings.EMAIL_HOST,
+                recipient_list=[request.POST['email']]
+            )
+        else:
+            return render(request, 'register.html', context={
+                'form': form
+            })
+    data = {
+        'form': UserRegisterForm()
+    }
+    return render(request, 'register.html', context=data)

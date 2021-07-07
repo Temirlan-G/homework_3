@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<h1>Регистрация</h1>
+<form action="/register/" style="width: 500px" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-success" type="submit" value="Войти">
+</form>
+{% endblock %}
